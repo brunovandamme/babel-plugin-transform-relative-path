@@ -15,11 +15,6 @@ export default ({ types }) => {
 
 	const visitor = {
 		CallExpression(path, state) {
-			const args = path.node.arguments;
-			if (args.length != null && args.length !== 0) {
-				const firstArg = traverseExpression(types, args[0]);
-			}
-
 			if (path.node.callee.name === 'require' || path.node.callee.type === 'Import') {
 				const args = path.node.arguments;
 				if (!args.length) {
