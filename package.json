@@ -6,7 +6,7 @@
 	"license": "MIT",
 	"repository": "brunovandamme/babel-plugin-transform-relative-path",
 	"dependencies": {
-		"esm": "^3.0.6",
+		"eslint": "^4.19.0",
 		"path": "^0.12.7",
 		"slash": "^1.0.0"
 	},
@@ -16,6 +16,8 @@
 	},
 	"devDependencies": {
 		"babel-cli": "^6.26.0",
+		"babel-eslint": "^8.2.2",
+		"babel-plugin-transform-object-rest-spread": "^6.26.0",
 		"babel-preset-env": "^1.6.1",
 		"nodemon": "^1.17.2"
 	}
