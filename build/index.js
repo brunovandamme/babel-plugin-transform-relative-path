@@ -27,19 +27,21 @@ exports.default = function (_ref) {
 
 	var visitor = {
 		CallExpression: function CallExpression(path, state) {
-			if (path.node.callee.name !== 'require') {
-				return;
-			}
-
 			var args = path.node.arguments;
-			if (!args.length) {
-				return;
+			if (args.length != null && args.length !== 0) {
+				var firstArg = traverseExpression(types, args[0]);
 			}
 
-			var firstArg = traverseExpression(types, args[0]);
+			if (path.node.callee.name === 'require' || path.node.callee.type === 'Import') {
+				var _args = path.node.arguments;
+				if (!_args.length) {
+					return;
+				}
 
-			if (firstArg) {
-				firstArg.value = (0, _pathSubstitutePrefix2.default)(state.file.opts.filename, firstArg.value, state.opts);
+				var _firstArg = traverseExpression(types, _args[0]);
+				if (_firstArg) {
+					_firstArg.value = (0, _pathSubstitutePrefix2.default)(state.file.opts.filename, _firstArg.value, state.opts);
+				}
 			}
 		},
 		ImportDeclaration: function ImportDeclaration(path, state) {

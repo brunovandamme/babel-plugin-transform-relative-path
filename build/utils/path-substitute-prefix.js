@@ -10,16 +10,9 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
 exports.default = function (filename, dependency, options) {
 	if ((typeof options === 'undefined' ? 'undefined' : _typeof(options)) === 'object') {
-		options = _extends({ prefix: 'src', directory: 'src' }, options);
-	}
-	if (options == null) {
-		options = {
-			prefix: 'src',
-			directory: 'src'
-		};
+		options = [_extends({ prefix: 'src', directory: 'src' }, options)];
 	}
 
-	options = [].concat(options);
 	var _iteratorNormalCompletion = true;
 	var _didIteratorError = false;
 	var _iteratorError = undefined;

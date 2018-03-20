@@ -15,19 +15,25 @@ export default ({ types }) => {
 
 	const visitor = {
 		CallExpression(path, state) {
-			if (path.node.callee.name !== 'require') {
-				return;
-			}
-
 			const args = path.node.arguments;
-			if (!args.length) {
-				return;
+			if (args.length != null && args.length !== 0) {
+				const firstArg = traverseExpression(types, args[0]);
 			}
 
-			const firstArg = traverseExpression(types, args[0]);
+			if (path.node.callee.name === 'require' || path.node.callee.type === 'Import') {
+				const args = path.node.arguments;
+				if (!args.length) {
+					return;
+				}
 
-			if (firstArg) {
-				firstArg.value = substitute(state.file.opts.filename, firstArg.value, state.opts);
+				const firstArg = traverseExpression(types, args[0]);
+				if (firstArg) {
+					firstArg.value = substitute(
+						state.file.opts.filename,
+						firstArg.value,
+						state.opts
+					);
+				}
 			}
 		},
 		ImportDeclaration(path, state) {
