@@ -2,7 +2,7 @@ import transform from './path-transform';
 
 export default function(filename, dependency, options) {
 	if (typeof options === 'object') {
-		options = [{ prefix: 'src', directory: 'src', ...options }];
+		options = [{ prefix: '@', directory: 'src', ...options }];
 	}
 
 	for (let option of options) {
