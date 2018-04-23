@@ -1,24 +1,27 @@
 {
 	"name": "babel-plugin-transform-relative-path",
-	"version": "0.1.1",
+	"version": "1.0.0",
 	"main": "build/index.js",
 	"author": "Bruno Van Damme",
 	"license": "MIT",
 	"repository": "brunovandamme/babel-plugin-transform-relative-path",
 	"dependencies": {
-		"eslint": "^4.19.0",
 		"path": "^0.12.7",
 		"slash": "^1.0.0"
 	},
 	"scripts": {
-		"build": "babel src -d build",
-		"development": "nodemon --watch src --exec yarn run build"
+		"build": "rollup -c rollup.config.js",
+		"clean": "rm -rf ./node_modules",
+		"develop": "nodemon --watch src --exec yarn run build"
 	},
 	"devDependencies": {
 		"babel-cli": "^6.26.0",
 		"babel-eslint": "^8.2.2",
 		"babel-plugin-transform-object-rest-spread": "^6.26.0",
 		"babel-preset-env": "^1.6.1",
-		"nodemon": "^1.17.2"
+		"eslint": "^4.19.1",
+		"nodemon": "^1.17.2",
+		"rollup": "^0.58.1",
+		"rollup-plugin-babel": "^3.0.4"
 	}
 }

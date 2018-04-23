@@ -1,16 +1,76 @@
-'use strict';
+import path from 'path';
+import slash from 'slash';
 
-Object.defineProperty(exports, "__esModule", {
-	value: true
-});
+function pathWithoutPrefix (filename, prefix) {
+	if (filename.startsWith(prefix)) {
+		filename = filename.slice(prefix.length);
+		if (filename.startsWith('/')) {
+			filename = filename.slice(1);
+		}
+	}
+	return filename;
+}
 
-var _pathSubstitutePrefix = require('./utils/path-substitute-prefix');
+function transform (filename, dependency, prefix) {
+	var directory = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : '.';
 
-var _pathSubstitutePrefix2 = _interopRequireDefault(_pathSubstitutePrefix);
+	if (dependency.startsWith(prefix)) {
+		var trailingslash = dependency.slice(-1) === '/';
+		var filepath = path.resolve(path.dirname(filename));
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+		dependency = pathWithoutPrefix(dependency, prefix);
+		dependency = path.resolve(directory, dependency);
+		dependency = path.relative(filepath, path.resolve(dependency));
+		dependency = slash(dependency);
 
-exports.default = function (_ref) {
+		if (!dependency.startsWith('../')) dependency = './' + dependency;
+		if (trailingslash) dependency = +'/';
+	}
+	return dependency;
+}
+
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
+function substitute (filename, dependency, options) {
+	if ((typeof options === 'undefined' ? 'undefined' : _typeof(options)) === 'object') {
+		options = [_extends({ prefix: '@', directory: '.' }, options)];
+	}
+
+	var _iteratorNormalCompletion = true;
+	var _didIteratorError = false;
+	var _iteratorError = undefined;
+
+	try {
+		for (var _iterator = options[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+			var option = _step.value;
+			var prefix = option.prefix,
+			    directory = option.directory;
+
+			if (dependency.startsWith(prefix)) {
+				return transform(filename, dependency, prefix, directory);
+			}
+		}
+	} catch (err) {
+		_didIteratorError = true;
+		_iteratorError = err;
+	} finally {
+		try {
+			if (!_iteratorNormalCompletion && _iterator.return) {
+				_iterator.return();
+			}
+		} finally {
+			if (_didIteratorError) {
+				throw _iteratorError;
+			}
+		}
+	}
+
+	return dependency;
+}
+
+var index = (function (_ref) {
 	var types = _ref.types;
 
 	var traverseExpression = function traverseExpression(type, arg) {
@@ -26,43 +86,40 @@ exports.default = function (_ref) {
 	};
 
 	var visitor = {
-		CallExpression: function CallExpression(path, state) {
-			var args = path.node.arguments;
-			if (args.length != null && args.length !== 0) {
-				var firstArg = traverseExpression(types, args[0]);
-			}
-
-			if (path.node.callee.name === 'require' || path.node.callee.type === 'Import') {
-				var _args = path.node.arguments;
-				if (!_args.length) {
+		CallExpression: function CallExpression(path$$1, state) {
+			if (path$$1.node.callee.name === 'require' || path$$1.node.callee.type === 'Import') {
+				var args = path$$1.node.arguments;
+				if (!args.length) {
 					return;
 				}
 
-				var _firstArg = traverseExpression(types, _args[0]);
-				if (_firstArg) {
-					_firstArg.value = (0, _pathSubstitutePrefix2.default)(state.file.opts.filename, _firstArg.value, state.opts);
+				var firstArg = traverseExpression(types, args[0]);
+				if (firstArg) {
+					firstArg.value = substitute(state.file.opts.filename, firstArg.value, state.opts);
 				}
 			}
 		},
-		ImportDeclaration: function ImportDeclaration(path, state) {
-			path.node.source.value = (0, _pathSubstitutePrefix2.default)(state.file.opts.filename, path.node.source.value, state.opts);
+		ImportDeclaration: function ImportDeclaration(path$$1, state) {
+			path$$1.node.source.value = substitute(state.file.opts.filename, path$$1.node.source.value, state.opts);
 		},
-		ExportNamedDeclaration: function ExportNamedDeclaration(path, state) {
-			if (path.node.source) {
-				path.node.source.value = (0, _pathSubstitutePrefix2.default)(state.file.opts.filename, path.node.source.value, state.opts);
+		ExportNamedDeclaration: function ExportNamedDeclaration(path$$1, state) {
+			if (path$$1.node.source) {
+				path$$1.node.source.value = substitute(state.file.opts.filename, path$$1.node.source.value, state.opts);
 			}
 		},
-		ExportAllDeclaration: function ExportAllDeclaration(path, state) {
-			if (path.node.source) {
-				path.node.source.value = (0, _pathSubstitutePrefix2.default)(state.file.opts.filename, path.node.source.value, state.opts);
+		ExportAllDeclaration: function ExportAllDeclaration(path$$1, state) {
+			if (path$$1.node.source) {
+				path$$1.node.source.value = substitute(state.file.opts.filename, path$$1.node.source.value, state.opts);
 			}
 		}
 	};
 	return {
 		visitor: {
-			Program: function Program(path, state) {
-				path.traverse(visitor, state);
+			Program: function Program(path$$1, state) {
+				path$$1.traverse(visitor, state);
 			}
 		}
 	};
-};
+});
+
+export default index;

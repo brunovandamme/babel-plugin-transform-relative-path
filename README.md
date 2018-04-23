@@ -17,7 +17,7 @@ Add the plugin to your babel config
 "plugins": ["transform-relative-path"]
 ```
 
-The default maps all paths that are prefixed with src to a src directory.
+The default maps all paths that are prefixed with '@' to the root directory.
 
 You can change the default configuration:
 
