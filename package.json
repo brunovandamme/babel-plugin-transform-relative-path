@@ -1,10 +1,11 @@
 {
 	"name": "babel-plugin-transform-relative-path",
-	"version": "1.0.1",
+	"version": "1.0.2",
 	"main": "build/index.js",
+	"module": "build/index.es.js",
 	"author": "Bruno Van Damme",
 	"license": "MIT",
-	"repository": "brunovandamme/babel-plugin-transform-relative-path",
+	"repository": "subhero24/babel-plugin-transform-relative-path",
 	"dependencies": {
 		"path": "^0.12.7",
 		"slash": "^1.0.0"
