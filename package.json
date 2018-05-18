@@ -1,6 +1,6 @@
 {
 	"name": "babel-plugin-transform-relative-path",
-	"version": "2.0.0",
+	"version": "2.0.1",
 	"main": "build/index.js",
 	"module": "build/index.es.js",
 	"author": "Bruno Van Damme",
