@@ -1,9 +1,5 @@
-'use strict';
-
-function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }
-
-var path = _interopDefault(require('path'));
-var slash = _interopDefault(require('slash'));
+import path from 'path';
+import slash from 'slash';
 
 function pathWithoutPrefix (filename, prefix) {
 	if (filename.startsWith(prefix)) {
@@ -126,4 +122,4 @@ var index = (function (_ref) {
 	};
 });
 
-module.exports = index;
+export default index;
