@@ -39,7 +39,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
 function substitute (filename, dependency, options) {
 	if ((typeof options === "undefined" ? "undefined" : _typeof(options)) === "object") {
-		options = [_extends({ prefix: "/", directory: "/" }, options)];
+		options = [_extends({ prefix: "/", directory: "." }, options)];
 	}
 
 	var _iteratorNormalCompletion = true;
