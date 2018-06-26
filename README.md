@@ -14,10 +14,10 @@ yarn add babel-plugin-transform-relative-path
 Add the plugin to your babel config
 
 ```
-"plugins": ["transform-relative-path"]
+"plugins": ["babel-plugin-transform-relative-path"]
 ```
 
-The default maps all paths that are prefixed with '@' to the root directory.
+The default maps all paths that are prefixed with '/' to the root directory.
 
 You can change the default configuration:
 
@@ -25,7 +25,7 @@ You can change the default configuration:
 "plugins": [
 	["transform-relative-path", {
 		prefix: '~',
-		directory: 'src'
+		directory: './src'
 	}]
 ]
 ```
@@ -37,11 +37,11 @@ or specify an array if you want multiple mappings:
 	["transform-relative-path", [
 		{
 			prefix: '~',
-			directory: 'src'
+			directory: './src'
 		},
 		{
 			prefix: 'lib'
-			directory: 'lib'
+			directory: './lib'
 		}
 	]
 ]

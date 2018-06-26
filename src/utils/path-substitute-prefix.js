@@ -1,8 +1,8 @@
-import transform from './path-transform';
+import transform from "./path-transform";
 
 export default function(filename, dependency, options) {
-	if (typeof options === 'object') {
-		options = [{ prefix: '#', directory: '.', ...options }];
+	if (typeof options === "object") {
+		options = [{ prefix: "/", directory: "/", ...options }];
 	}
 
 	for (let option of options) {

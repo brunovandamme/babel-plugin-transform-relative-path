@@ -34,8 +34,8 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
 function substitute (filename, dependency, options) {
-	if ((typeof options === 'undefined' ? 'undefined' : _typeof(options)) === 'object') {
-		options = [_extends({ prefix: '#', directory: '.' }, options)];
+	if ((typeof options === "undefined" ? "undefined" : _typeof(options)) === "object") {
+		options = [_extends({ prefix: "/", directory: "/" }, options)];
 	}
 
 	var _iteratorNormalCompletion = true;
