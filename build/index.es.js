@@ -29,13 +29,11 @@ function transform (filename, dependency, prefix) {
 	return dependency;
 }
 
-var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-
-var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; }();
 
 function substitute (filename, dependency, options) {
-	if ((typeof options === "undefined" ? "undefined" : _typeof(options)) === "object") {
-		options = [_extends({ prefix: "/", directory: "." }, options)];
+	if (Object.keys(options).length === 0) {
+		options = { "/": "." };
 	}
 
 	var _iteratorNormalCompletion = true;
@@ -43,10 +41,13 @@ function substitute (filename, dependency, options) {
 	var _iteratorError = undefined;
 
 	try {
-		for (var _iterator = options[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
-			var option = _step.value;
-			var prefix = option.prefix,
-			    directory = option.directory;
+		for (var _iterator = Object.entries(options)[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+			var _ref = _step.value;
+
+			var _ref2 = _slicedToArray(_ref, 2);
+
+			var prefix = _ref2[0];
+			var directory = _ref2[1];
 
 			if (dependency.startsWith(prefix)) {
 				return transform(filename, dependency, prefix, directory);
