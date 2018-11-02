@@ -1,17 +1,17 @@
-import babel from 'rollup-plugin-babel';
+import babel from "rollup-plugin-babel";
 
 export default {
-	input: 'src/index.js',
+	input: "src/index.js",
 	output: [
 		{
-			file: 'build/index.js',
-			format: 'cjs',
+			file: "build/index.js",
+			format: "cjs",
 		},
 		{
-			file: 'build/index.es.js',
-			format: 'es',
+			file: "build/index.es.js",
+			format: "es",
 		},
 	],
 	plugins: [babel()],
-	external: ['slash', 'path'],
+	external: ["slash", "path"],
 };

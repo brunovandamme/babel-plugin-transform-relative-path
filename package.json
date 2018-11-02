@@ -1,6 +1,6 @@
 {
 	"name": "babel-plugin-transform-relative-path",
-	"version": "3.0.0",
+	"version": "3.0.1",
 	"main": "build/index.js",
 	"module": "build/index.es.js",
 	"author": "Bruno Van Damme",
@@ -17,13 +17,13 @@
 		"prepublish": "yarn run clean && yarn run build"
 	},
 	"devDependencies": {
-		"babel-cli": "^6.26.0",
+		"@babel/core": "^7.1.2",
+		"@babel/plugin-proposal-object-rest-spread": "^7.0.0",
+		"@babel/preset-env": "^7.1.0",
 		"babel-eslint": "^8.2.2",
-		"babel-plugin-transform-object-rest-spread": "^6.26.0",
-		"babel-preset-env": "^1.6.1",
 		"eslint": "^4.19.1",
 		"nodemon": "^1.17.2",
-		"rollup": "^0.58.1",
-		"rollup-plugin-babel": "^3.0.4"
+		"rollup": "^0.66.6",
+		"rollup-plugin-babel": "^4.0.3"
 	}
 }
