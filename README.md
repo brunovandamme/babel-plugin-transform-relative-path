@@ -18,7 +18,7 @@ Add the plugin to your babel config
 "plugins": ["babel-plugin-transform-relative-path"]
 ```
 
-The default maps all paths that are prefixed with '/' to the root directory.
+The default maps all paths that are prefixed with '/' to the current working directory.
 
 You can change the default configuration:
 
@@ -37,6 +37,17 @@ or specify multiple mappings:
 	["transform-relative-path", {
 		'~': './src',
 		'lib': './lib'
+	}]
+]
+```
+
+If you want the paths relative to your project directory instead of working directory,
+you can do the following in a .babelrc.js file:
+
+```
+plugins: [
+	["transform-relative-path", {
+		'/': __dirname
 	}]
 ]
 ```
