@@ -1,29 +1,24 @@
 {
 	"name": "babel-plugin-transform-relative-path",
-	"version": "3.0.1",
-	"main": "build/index.js",
-	"module": "build/index.es.js",
+	"main": "dist/index.js",
+	"module": "dist/index.es.js",
+	"source": "src/index.js",
 	"author": "Bruno Van Damme",
 	"license": "MIT",
 	"repository": "subhero24/babel-plugin-transform-relative-path",
-	"dependencies": {
-		"path": "^0.12.7",
-		"slash": "^1.0.0"
-	},
-	"scripts": {
-		"build": "rollup -c rollup.config.js",
-		"clean": "rm -rf ./build",
-		"develop": "nodemon --watch src --exec yarn run build",
-		"prepublish": "yarn run clean && yarn run build"
-	},
+	"dependencies": {},
 	"devDependencies": {
 		"@babel/core": "^7.1.2",
-		"@babel/plugin-proposal-object-rest-spread": "^7.0.0",
 		"@babel/preset-env": "^7.1.0",
 		"babel-eslint": "^8.2.2",
 		"eslint": "^4.19.1",
-		"nodemon": "^1.17.2",
-		"rollup": "^0.66.6",
-		"rollup-plugin-babel": "^4.0.3"
+		"esm": "^3.2.7",
+		"prettier": "^1.16.4",
+		"roller": "https://github.com/subhero24/roller.git#^v1.0.0"
+	},
+	"scripts": {
+		"prepare": "yarn run build",
+		"build": "roller",
+		"develop": "roller --watch"
 	}
 }
