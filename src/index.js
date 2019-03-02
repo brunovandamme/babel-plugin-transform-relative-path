@@ -1,4 +1,4 @@
-import substitute from './utils/path-substitute-prefix';
+import transform from './transform';
 
 export default ({ types }) => {
 	const traverseExpression = (type, arg) => {
@@ -23,21 +23,21 @@ export default ({ types }) => {
 
 				const firstArg = traverseExpression(types, args[0]);
 				if (firstArg) {
-					firstArg.value = substitute(state.file.opts.filename, firstArg.value, state.opts);
+					firstArg.value = transform(state.file.opts.filename, firstArg.value, state.opts);
 				}
 			}
 		},
 		ImportDeclaration(path, state) {
-			path.node.source.value = substitute(state.file.opts.filename, path.node.source.value, state.opts);
+			path.node.source.value = transform(state.file.opts.filename, path.node.source.value, state.opts);
 		},
 		ExportNamedDeclaration(path, state) {
 			if (path.node.source) {
-				path.node.source.value = substitute(state.file.opts.filename, path.node.source.value, state.opts);
+				path.node.source.value = transform(state.file.opts.filename, path.node.source.value, state.opts);
 			}
 		},
 		ExportAllDeclaration(path, state) {
 			if (path.node.source) {
-				path.node.source.value = substitute(state.file.opts.filename, path.node.source.value, state.opts);
+				path.node.source.value = transform(state.file.opts.filename, path.node.source.value, state.opts);
 			}
 		},
 	};
