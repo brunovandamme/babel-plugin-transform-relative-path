@@ -1,31 +1,55 @@
-import stringtype from './type';
-import substitute from './substitute';
+// @ts-check
 
-export default function(filename, dependency, options) {
-	let entries = [['/', '.']];
+import fs from 'fs';
+import path from 'path';
+import resolve from 'resolve';
 
-	let type = stringtype(options);
-	if (type === 'Object') {
-		entries = Object.entries(options);
-	} else if (type === 'Map') {
-		entries = options.entries();
-	}
+/**
+ *
+ * @param {string} filename The path of the file that has the import/require statement
+ * @param {string} dependency The string describing the location of the import/require
+ * @param {Object<string, string>} options A mapping between prefixes and directories
+ * @returns {string}
+ */
+export default function(filename, dependency, options = { '/': '.' }) {
+	for (let prefix in options) {
+		let directory = options[prefix];
+		let match = dependency.startsWith(prefix);
+		if (match) {
+			let postfix = dependency.slice(prefix.length);
 
-	for (let [prefix, directory] of entries) {
-		let ok = false;
+			let prefixHasSeperator = prefix.endsWith(path.sep);
+			let postfixHasSeperator = postfix.startsWith(path.sep);
 
-		let type = stringtype(prefix);
-		if (type === 'RegExp') {
-			let match = dependency.match(prefix);
-			if (match) {
-				ok = true;
-				prefix = match[0];
+			let fullmatch = postfix.length === 0;
+			let partialmatch = prefixHasSeperator || postfixHasSeperator;
+			if (fullmatch || partialmatch) {
+				let transform;
+				if (postfixHasSeperator) {
+					transform = postfix.slice(path.sep.length);
+				} else {
+					transform = postfix;
+				}
+
+				let absolutePath = fs.realpathSync(filename);
+				let absoluteDirectory = path.dirname(absolutePath);
+				let dependencyPath = path.resolve(directory, transform);
+				let dependencyResolvedPath = resolve.sync(dependencyPath, { preserveSymlinks: false });
+				let dependencyAbsolutePath = fs.realpathSync(dependencyResolvedPath);
+
+				let relativePath = path.relative(absoluteDirectory, dependencyAbsolutePath);
+				if (!relativePath.startsWith('.') && !relativePath.startsWith(path.sep)) {
+					relativePath = `.${path.sep}${relativePath}`;
+				}
+
+				if (!relativePath.endsWith(path.sep) && transform.endsWith(path.sep)) {
+					relativePath = `${relativePath}${path.sep}`;
+				}
+
+				return relativePath;
 			}
-		} else if (type === 'String') {
-			ok = dependency.startsWith(prefix);
 		}
-
-		if (ok) return substitute(filename, dependency, prefix, directory);
 	}
+
 	return dependency;
 }
