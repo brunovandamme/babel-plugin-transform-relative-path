@@ -1,0 +1,27 @@
+{
+	"name": "babel-plugin-transform-relative-path",
+	"main": "dist/index.js",
+	"module": "dist/index.es.js",
+	"source": "src/index.js",
+	"author": "Bruno Van Damme",
+	"license": "MIT",
+	"version": "1.0.0",
+	"repository": "subhero24/babel-plugin-transform-relative-path",
+	"dependencies": {
+		"escape-string-regexp": "^1.0.5"
+	},
+	"devDependencies": {
+		"@babel/core": "^7.1.2",
+		"@babel/preset-env": "^7.1.0",
+		"babel-eslint": "^8.2.2",
+		"eslint": "^4.19.1",
+		"esm": "^3.2.7",
+		"prettier": "^1.16.4",
+		"roller": "*"
+	},
+	"scripts": {
+		"build": "roller",
+		"develop": "roller --watch",
+		"prepublishOnly": "yarn run build"
+	}
+}
